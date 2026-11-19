@@ -1,1 +1,134 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07130d">
+<title>HIISPORTS Newsroom</title>
+<style>
+:root {
+  --bg:#07130d;
+  --panel:#102019;
+  --line:#234332;
+  --green:#55d887;
+  --muted:#9bb3a4;
+  --white:#f4fff7;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--white);
+  font-family:Arial, sans-serif;
+}
+.shell { max-width:1100px; margin:auto; padding:25px 20px; }
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+  padding-bottom:20px;
+  gap:15px;
+}
+.brand { font-weight:800; letter-spacing:2px; }
+.brand span { color:var(--green); }
+.status { color:var(--green); font-size:13px; }
+.hero { padding:45px 0 25px; }
+.eyebrow {
+  color:var(--green);
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:3px;
+}
+h1 { font-size:clamp(32px,6vw,52px); line-height:1.1; }
+h1 span { color:var(--green); }
+.sub { color:var(--muted); max-width:650px; line-height:1.7; }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin:30px 0;
+}
+.card {
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:22px;
+}
+.num { font-size:30px; font-weight:bold; }
+.label { color:var(--muted); font-size:13px; }
+.section { margin:35px 0 15px; }
+.empty {
+  border:1px dashed #345542;
+  border-radius:15px;
+  padding:35px 20px;
+  text-align:center;
+  color:var(--muted);
+  line-height:1.7;
+}
+footer {
+  border-top:1px solid var(--line);
+  margin-top:45px;
+  padding-top:20px;
+  color:var(--muted);
+  font-size:12px;
+}
+@media(max-width:650px) {
+  .grid { grid-template-columns:1fr; }
+  header { align-items:flex-start; flex-direction:column; }
+}
+</style>
+</head>
+<body>
+<main class="shell">
+<header>
+  <div class="brand">HIISPORTS <span>NEWSROOM</span></div>
+  <div class="status">● ESPACE ÉDITORIAL</div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">LE SPORT, EN CONTINU</div>
+  <h1>Votre rédaction.<br><span>Un seul espace.</span></h1>
+  <p class="sub">
+    Tableau de bord de préparation, de vérification et de suivi
+    des contenus HIISPORTS. Chaque publication nécessite une
+    validation éditoriale humaine.
+  </p>
+</section>
+
+<section class="grid">
+  <article class="card">
+    <div class="num">0</div>
+    <div class="label">Articles collectés</div>
+  </article>
+  <article class="card">
+    <div class="num">0</div>
+    <div class="label">Articles à vérifier</div>
+  </article>
+  <article class="card">
+    <div class="num">0</div>
+    <div class="label">Prêts à publier</div>
+  </article>
+</section>
+
+<section>
+  <div class="section">
+    <h2>Dernières actualités</h2>
+  </div>
+  <div class="empty">
+    Aucune actualité pour le moment.<br>
+    Les sources RSS et les API sportives seront
+    connectées lors de la prochaine étape.
+  </div>
+</section>
+
+<footer>
+  HIISPORTS · NEWSROOM · VERSION INITIALE
+  <br><br>
+  Les données sportives en direct ne sont pas encore connectées.
+</footer>
+</main>
+</body>
+</html>
+
