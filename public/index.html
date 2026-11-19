@@ -3,132 +3,550 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#07130d">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07110d">
 <title>HIISPORTS Newsroom</title>
 <style>
 :root {
-  --bg:#07130d;
-  --panel:#102019;
-  --line:#234332;
-  --green:#55d887;
-  --muted:#9bb3a4;
-  --white:#f4fff7;
+  --bg:#07110d;
+  --panel:#101c16;
+  --panel2:#15231b;
+  --green:#20d879;
+  --green2:#12a85b;
+  --white:#f4f8f5;
+  --muted:#8da095;
+  --border:#26372d;
+  --red:#ff6b6b;
+  --yellow:#f4c95d;
 }
-* { box-sizing:border-box; }
-body {
-  margin:0;
-  background:var(--bg);
-  color:var(--white);
-  font-family:Arial, sans-serif;
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--white);
+  font-family:Inter,Arial,sans-serif;font-size:14px;
 }
-.shell { max-width:1100px; margin:auto; padding:25px 20px; }
-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid var(--line);
-  padding-bottom:20px;
-  gap:15px;
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{
+  width:245px;background:#0b1510;border-right:1px solid var(--border);
+  padding:25px 15px;position:fixed;inset:0 auto 0 0;z-index:5;
 }
-.brand { font-weight:800; letter-spacing:2px; }
-.brand span { color:var(--green); }
-.status { color:var(--green); font-size:13px; }
-.hero { padding:45px 0 25px; }
-.eyebrow {
-  color:var(--green);
-  font-size:12px;
-  font-weight:bold;
-  letter-spacing:3px;
+.brand{display:flex;align-items:center;gap:11px;padding:0 9px 30px}
+.brand-icon{
+  width:42px;height:42px;border-radius:12px;background:var(--green);
+  color:#06120b;display:grid;place-items:center;font-size:25px;font-weight:900;
 }
-h1 { font-size:clamp(32px,6vw,52px); line-height:1.1; }
-h1 span { color:var(--green); }
-.sub { color:var(--muted); max-width:650px; line-height:1.7; }
-.grid {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  margin:30px 0;
+.brand strong{font-size:18px;letter-spacing:1px}
+.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px;margin-top:4px}
+.nav-label{color:#617368;font-size:10px;font-weight:bold;letter-spacing:1.5px;padding:15px 12px 8px}
+.nav-btn{
+  width:100%;display:flex;align-items:center;gap:12px;padding:12px;
+  color:#a9b9ae;background:transparent;border:0;border-radius:9px;
+  text-align:left;margin:3px 0;transition:.2s;
 }
-.card {
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:22px;
+.nav-btn:hover,.nav-btn.active{background:#183325;color:var(--green)}
+.nav-btn .ico{width:20px;text-align:center;font-size:16px}
+.sidebar-bottom{
+  position:absolute;bottom:20px;left:15px;right:15px;
+  border-top:1px solid var(--border);padding:15px 8px;color:var(--muted);
+  font-size:11px;line-height:1.6;
 }
-.num { font-size:30px; font-weight:bold; }
-.label { color:var(--muted); font-size:13px; }
-.section { margin:35px 0 15px; }
-.empty {
-  border:1px dashed #345542;
-  border-radius:15px;
-  padding:35px 20px;
-  text-align:center;
-  color:var(--muted);
-  line-height:1.7;
+.main{margin-left:245px;width:calc(100% - 245px);min-width:0}
+.topbar{
+  height:72px;border-bottom:1px solid var(--border);display:flex;
+  align-items:center;justify-content:space-between;padding:0 30px;
+  background:#0b1510;position:sticky;top:0;z-index:4;
 }
-footer {
-  border-top:1px solid var(--line);
-  margin-top:45px;
-  padding-top:20px;
-  color:var(--muted);
-  font-size:12px;
+.topbar h2{font-size:16px;margin:0}
+.top-right{display:flex;align-items:center;gap:12px}
+.status-dot{width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block}
+.top-status{font-size:11px;color:var(--muted)}
+.content{padding:30px;max-width:1450px;margin:auto}
+.page{display:none}
+.page.active{display:block}
+.page-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+.page-heading h1{font-size:25px;margin:0 0 7px}
+.page-heading p{margin:0;color:var(--muted);font-size:13px}
+.btn{
+  border:1px solid var(--border);background:var(--panel2);color:var(--white);
+  padding:10px 15px;border-radius:8px;font-weight:600;
 }
-@media(max-width:650px) {
-  .grid { grid-template-columns:1fr; }
-  header { align-items:flex-start; flex-direction:column; }
+.btn:hover{border-color:var(--green)}
+.btn-primary{background:var(--green);border-color:var(--green);color:#06120b}
+.btn-primary:hover{background:#48ed96}
+.btn-danger{color:var(--red)}
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:25px;
+}
+.stat-card,.card{
+  background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:19px;
+}
+.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.stat-number{font-size:30px;font-weight:750;margin-top:16px}
+.stat-icon{font-size:19px}
+.grid-2{display:grid;grid-template-columns:1.35fr 1fr;gap:17px}
+.card h3{font-size:14px;margin:0 0 17px}
+.muted{color:var(--muted)}
+.empty{
+  border:1px dashed #34483b;border-radius:9px;padding:35px 15px;
+  text-align:center;color:var(--muted);line-height:1.7;
+}
+.empty .empty-icon{font-size:28px;margin-bottom:8px}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick-action{
+  padding:15px;background:var(--panel2);border:1px solid var(--border);
+  border-radius:9px;text-align:left;color:var(--white);
+}
+.quick-action:hover{border-color:var(--green)}
+.quick-action span{display:block;font-size:19px;margin-bottom:9px}
+.quick-action strong{font-size:12px}
+.quick-action small{display:block;color:var(--muted);margin-top:5px;font-size:10px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:550px}
+th{text-align:left;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}
+th,td{padding:14px 10px;border-bottom:1px solid var(--border)}
+td{font-size:12px}
+.badge{
+  display:inline-block;padding:5px 8px;border-radius:20px;
+  font-size:10px;font-weight:bold;background:#25362c;color:#b8c8bd;
+}
+.badge.valid{background:#123d28;color:#55e99a}
+.badge.review{background:#44391b;color:#f4d477}
+.badge.draft{background:#26323b;color:#aabac7}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:15px}
+.field.full{grid-column:1/-1}
+.field label{font-size:12px;color:#bdc9c0;font-weight:600}
+.field input,.field textarea,.field select,.search{
+  width:100%;background:#0b1510;border:1px solid var(--border);
+  border-radius:8px;padding:12px;color:var(--white);outline:none;
+}
+.field input:focus,.field textarea:focus,.field select:focus,.search:focus{border-color:var(--green)}
+.field textarea{min-height:130px;resize:vertical;line-height:1.6}
+.field select option{background:#101c16}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:15px}
+.toolbar .search{max-width:330px}
+.article-title{font-weight:700;color:var(--white)}
+.article-sub{font-size:10px;color:var(--muted);margin-top:5px}
+.workflow{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.workflow-step{padding:17px;background:var(--panel2);border:1px solid var(--border);border-radius:10px}
+.workflow-step .step-number{color:var(--green);font-size:12px;font-weight:bold}
+.workflow-step h4{margin:10px 0 7px;font-size:13px}
+.workflow-step p{color:var(--muted);font-size:11px;line-height:1.6;margin:0}
+.source-item{padding:14px 0;border-bottom:1px solid var(--border)}
+.source-item:last-child{border:0}
+.source-item strong{font-size:12px}
+.source-item p{font-size:11px;color:var(--muted);margin:5px 0 0}
+.notice{
+  padding:13px 15px;border:1px solid #625126;background:#292516;
+  color:#e9d58b;border-radius:9px;font-size:11px;line-height:1.6;margin-bottom:18px;
+}
+.social-preview{
+  background:#0b1510;border:1px solid var(--border);border-radius:10px;
+  padding:16px;white-space:pre-wrap;line-height:1.6;font-size:12px;min-height:130px;
+}
+.mobile-menu{display:none}
+.toast{
+  position:fixed;bottom:20px;right:20px;background:#183b29;color:#caffdf;
+  padding:13px 18px;border:1px solid #287b4a;border-radius:9px;
+  z-index:20;display:none;
+}
+.footer-note{font-size:10px;color:#68796e;margin-top:25px}
+@media(max-width:900px){
+ .sidebar{width:205px}.main{margin-left:205px;width:calc(100% - 205px)}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .grid-2{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+ .sidebar{display:none;width:260px;box-shadow:15px 0 40px #0009}
+ .sidebar.open{display:block}
+ .main{margin-left:0;width:100%}
+ .topbar{height:62px;padding:0 15px}
+ .mobile-menu{display:inline-block;background:none;border:0;color:var(--white);font-size:22px}
+ .topbar h2{font-size:14px}
+ .top-status{display:none}
+ .content{padding:20px 14px}
+ .page-heading{align-items:flex-start;flex-direction:column}
+ .page-heading h1{font-size:22px}
+ .stats{gap:9px}
+ .stat-card{padding:13px}
+ .stat-number{font-size:25px}
+ .stat-top{font-size:10px}
+ .workflow{grid-template-columns:1fr}
+ .form-grid{grid-template-columns:1fr}
+ .field.full{grid-column:auto}
+ .toolbar{align-items:stretch;flex-direction:column}
+ .toolbar .search{max-width:none}
+ .quick-actions{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 <body>
-<main class="shell">
-<header>
-  <div class="brand">HIISPORTS <span>NEWSROOM</span></div>
-  <div class="status">● ESPACE ÉDITORIAL</div>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-icon">H</div>
+    <div><strong>HIISPORTS</strong><small>NEWSROOM</small></div>
+  </div>
+  <div class="nav-label">ESPACE DE TRAVAIL</div>
+  <button class="nav-btn active" data-page="dashboard"><span class="ico">▦</span> Tableau de bord</button>
+  <button class="nav-btn" data-page="articles"><span class="ico">▤</span> Actualités</button>
+  <button class="nav-btn" data-page="editor"><span class="ico">✎</span> Rédaction</button>
+  <button class="nav-btn" data-page="verification"><span class="ico">✓</span> Vérification</button>
+  <div class="nav-label">SPORT & DIFFUSION</div>
+  <button class="nav-btn" data-page="sports"><span class="ico">⚽</span> Sports & compétitions</button>
+  <button class="nav-btn" data-page="social"><span class="ico">◉</span> Publications sociales</button>
+  <div class="nav-label">RESSOURCES</div>
+  <button class="nav-btn" data-page="sources"><span class="ico">◎</span> Sources & références</button>
+  <button class="nav-btn" data-page="settings"><span class="ico">⚙</span> Paramètres</button>
+  <div class="sidebar-bottom">
+    <span class="status-dot"></span> Espace éditorial actif<br>
+    HIISPORTS Newsroom · Version 1.0
+  </div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button class="mobile-menu" id="mobileMenu">☰</button>
+    <h2 id="topTitle">Tableau de bord</h2>
+  </div>
+  <div class="top-right"><span class="top-status"><span class="status-dot"></span> Mode prototype</span></div>
 </header>
 
-<section class="hero">
-  <div class="eyebrow">LE SPORT, EN CONTINU</div>
-  <h1>Votre rédaction.<br><span>Un seul espace.</span></h1>
-  <p class="sub">
-    Tableau de bord de préparation, de vérification et de suivi
-    des contenus HIISPORTS. Chaque publication nécessite une
-    validation éditoriale humaine.
-  </p>
-</section>
-
-<section class="grid">
-  <article class="card">
-    <div class="num">0</div>
-    <div class="label">Articles collectés</div>
-  </article>
-  <article class="card">
-    <div class="num">0</div>
-    <div class="label">Articles à vérifier</div>
-  </article>
-  <article class="card">
-    <div class="num">0</div>
-    <div class="label">Prêts à publier</div>
-  </article>
-</section>
-
-<section>
-  <div class="section">
-    <h2>Dernières actualités</h2>
+<div class="content">
+<section class="page active" id="dashboard">
+  <div class="page-heading">
+    <div><h1>Bonjour, la rédaction.</h1><p>Bienvenue dans votre espace de travail HIISPORTS.</p></div>
+    <button class="btn btn-primary" onclick="showPage('editor')">＋ Nouvel article</button>
   </div>
-  <div class="empty">
-    Aucune actualité pour le moment.<br>
-    Les sources RSS et les API sportives seront
-    connectées lors de la prochaine étape.
+  <div class="stats">
+    <div class="stat-card"><div class="stat-top">Total des articles <span class="stat-icon">▤</span></div><div class="stat-number" id="totalCount">0</div></div>
+    <div class="stat-card"><div class="stat-top">Brouillons <span class="stat-icon">✎</span></div><div class="stat-number" id="draftCount">0</div></div>
+    <div class="stat-card"><div class="stat-top">À vérifier <span class="stat-icon">◷</span></div><div class="stat-number" id="reviewCount">0</div></div>
+    <div class="stat-card"><div class="stat-top">Validés <span class="stat-icon">✓</span></div><div class="stat-number" id="validCount">0</div></div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Dernières actualités</h3>
+      <div id="recentArticles" class="empty"><div class="empty-icon">📰</div>Aucun article pour le moment.<br>Commence par rédiger ta première actualité.</div>
+    </div>
+    <div class="card">
+      <h3>Actions rapides</h3>
+      <div class="quick-actions">
+        <button class="quick-action" onclick="showPage('editor')"><span>✎</span><strong>Rédiger un article</strong><small>Créer un nouveau contenu</small></button>
+        <button class="quick-action" onclick="showPage('verification')"><span>✓</span><strong>Vérifier les faits</strong><small>Contrôler les informations</small></button>
+        <button class="quick-action" onclick="showPage('social')"><span>◉</span><strong>Préparer un post</strong><small>Adapter le contenu aux réseaux</small></button>
+        <button class="quick-action" onclick="showPage('sources')"><span>◎</span><strong>Consulter les sources</strong><small>Organiser les références</small></button>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:17px">
+    <h3>Notre processus éditorial</h3>
+    <div class="workflow">
+      <div class="workflow-step"><div class="step-number">ÉTAPE 01</div><h4>Collecter l'information</h4><p>Repérer une actualité et conserver les liens des sources fiables.</p></div>
+      <div class="workflow-step"><div class="step-number">ÉTAPE 02</div><h4>Rédiger & vérifier</h4><p>Rédiger un contenu original, vérifier les faits et distinguer les rumeurs.</p></div>
+      <div class="workflow-step"><div class="step-number">ÉTAPE 03</div><h4>Valider & diffuser</h4><p>Relire le contenu puis préparer les différentes versions pour les réseaux.</p></div>
+    </div>
   </div>
 </section>
 
-<footer>
-  HIISPORTS · NEWSROOM · VERSION INITIALE
-  <br><br>
-  Les données sportives en direct ne sont pas encore connectées.
-</footer>
+<section class="page" id="articles">
+  <div class="page-heading"><div><h1>Actualités</h1><p>Retrouve et organise tous tes articles.</p></div><button class="btn btn-primary" onclick="newArticle()">＋ Nouvel article</button></div>
+  <div class="toolbar">
+    <input class="search" id="articleSearch" placeholder="Rechercher un article...">
+    <select class="search" id="statusFilter" style="max-width:190px"><option value="">Tous les statuts</option><option>Brouillon</option><option>À vérifier</option><option>Validé</option></select>
+  </div>
+  <div class="card table-wrap">
+    <table><thead><tr><th>Article</th><th>Sport</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead><tbody id="articleRows"></tbody></table>
+    <div id="articleEmpty" class="empty" style="display:none">Aucun article trouvé.</div>
+  </div>
+</section>
+
+<section class="page" id="editor">
+  <div class="page-heading"><div><h1 id="editorHeading">Rédaction d'un article</h1><p>Prépare un contenu original pour HIISPORTS.</p></div></div>
+  <div class="notice">Rappel éditorial : ne présente jamais une rumeur comme un fait confirmé. Ajoute les références et vérifie les informations avant validation.</div>
+  <div class="card">
+    <form id="articleForm">
+      <input type="hidden" id="articleId">
+      <div class="form-grid">
+        <div class="field full"><label for="title">Titre de l'article *</label><input id="title" required maxlength="180" placeholder="Ex. : Le Real Madrid prépare son prochain match..."></div>
+        <div class="field"><label for="sport">Catégorie sportive *</label><select id="sport" required><option value="">Choisir un sport</option><option>Football</option><option>Basketball</option><option>Tennis</option><option>Volleyball</option><option>Baseball</option><option>Sports de combat</option><option>Athlétisme</option><option>Formule 1</option><option>Autres sports</option></select></div>
+        <div class="field"><label for="status">Statut éditorial</label><select id="status"><option>Brouillon</option><option>À vérifier</option><option>Validé</option></select></div>
+        <div class="field full"><label for="summary">Résumé / introduction</label><textarea id="summary" style="min-height:85px" placeholder="Résume l'information en quelques phrases..."></textarea></div>
+        <div class="field full"><label for="body">Contenu de l'article *</label><textarea id="body" required placeholder="Rédige ici ton article..."></textarea></div>
+        <div class="field full"><label for="source">Source(s) et lien(s) de référence</label><textarea id="source" style="min-height:75px" placeholder="Nom du média, communiqué officiel, lien URL..."></textarea></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Enregistrer l'article</button>
+        <button class="btn" type="button" onclick="resetForm()">Effacer</button>
+        <button class="btn" type="button" onclick="showPage('articles')">Retour aux articles</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="page" id="verification">
+  <div class="page-heading"><div><h1>Vérification éditoriale</h1><p>Contrôle les informations avant de les considérer comme validées.</p></div></div>
+  <div class="notice">La validation dans cet outil est une étape de suivi. Elle ne vérifie pas automatiquement la véracité d'une information : la vérification humaine reste indispensable.</div>
+  <div class="card">
+    <h3>Articles en attente de vérification</h3>
+    <div id="verificationList" class="empty">Aucun article en attente de vérification.</div>
+  </div>
+  <div class="card" style="margin-top:17px">
+    <h3>Checklist de vérification</h3>
+    <div style="display:grid;gap:13px;color:#bdc9c0;font-size:12px">
+      <label><input type="checkbox"> L'information est confirmée par une source identifiable.</label>
+      <label><input type="checkbox"> La date et le contexte sont corrects.</label>
+      <label><input type="checkbox"> Les citations et statistiques sont vérifiées.</label>
+      <label><input type="checkbox"> Les rumeurs sont clairement présentées comme telles.</label>
+      <label><input type="checkbox"> Le titre correspond réellement au contenu.</label>
+      <label><input type="checkbox"> Le texte a été relu avant publication.</label>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="sports">
+  <div class="page-heading"><div><h1>Sports & compétitions</h1><p>Organise la couverture éditoriale par discipline.</p></div></div>
+  <div class="stats" id="sportStats"></div>
+  <div class="card">
+    <h3>Couverture sportive</h3>
+    <p class="muted" style="font-size:12px;line-height:1.7">HIISPORTS a vocation à couvrir plusieurs disciplines : football, basketball, tennis, volleyball, baseball, athlétisme, sports de combat, Formule 1 et autres compétitions. Les résultats et calendriers ne sont pas encore connectés à une source de données en direct.</p>
+  </div>
+</section>
+
+<section class="page" id="social">
+  <div class="page-heading"><div><h1>Publications sociales</h1><p>Prépare des textes adaptés à tes plateformes.</p></div></div>
+  <div class="notice">Cette version prépare les publications, mais ne publie rien automatiquement sur Facebook, Instagram, TikTok, X ou YouTube.</div>
+  <div class="card">
+    <div class="field"><label>Choisir un article</label><select id="socialArticle"><option value="">Sélectionner un article</option></select></div>
+    <div class="field"><label>Plateforme</label><select id="socialPlatform"><option>Facebook</option><option>Instagram</option><option>X</option><option>TikTok</option><option>WhatsApp Channel</option><option>YouTube</option></select></div>
+    <button class="btn btn-primary" onclick="generateSocial()">Générer le texte</button>
+    <h3 style="margin-top:22px">Aperçu de la publication</h3>
+    <div class="social-preview" id="socialPreview">Sélectionne un article pour préparer une publication.</div>
+    <button class="btn" style="margin-top:12px" onclick="copySocial()">Copier le texte</button>
+  </div>
+</section>
+
+<section class="page" id="sources">
+  <div class="page-heading"><div><h1>Sources & références</h1><p>Les sources sont essentielles à une rédaction sportive fiable.</p></div></div>
+  <div class="card">
+    <h3>Sources officielles à privilégier</h3>
+    <div class="source-item"><strong>FIFA</strong><p>Communiqués, compétitions et informations officielles du football international.</p></div>
+    <div class="source-item"><strong>UEFA</strong><p>Compétitions européennes, calendriers et décisions officielles.</p></div>
+    <div class="source-item"><strong>NBA</strong><p>Actualités et informations officielles du basketball.</p></div>
+    <div class="source-item"><strong>ATP & WTA</strong><p>Résultats et actualités officielles du tennis.</p></div>
+    <div class="source-item"><strong>Fédérations nationales et clubs</strong><p>Communiqués, déclarations et annonces directement publiés par les organisations.</p></div>
+    <p class="footer-note">Ces références sont des pistes de consultation. Aucun flux automatique n'est encore connecté.</p>
+  </div>
+</section>
+
+<section class="page" id="settings">
+  <div class="page-heading"><div><h1>Paramètres</h1><p>Informations générales sur ton espace éditorial.</p></div></div>
+  <div class="card">
+    <h3>Identité éditoriale</h3>
+    <div class="field"><label>Nom du média</label><input value="HIISPORTS" readonly></div>
+    <div class="field"><label>Nom de l'espace</label><input value="HIISPORTS Newsroom" readonly></div>
+    <div class="field"><label>Langue principale</label><input value="Français" readonly></div>
+    <div class="field"><label>Couleurs de la marque</label><input value="Vert · Noir · Blanc" readonly></div>
+  </div>
+  <div class="card" style="margin-top:17px">
+    <h3>Données de ce prototype</h3>
+    <p class="muted" style="font-size:12px;line-height:1.7">Les articles sont conservés dans le stockage local du navigateur. Ils ne sont pas synchronisés entre appareils et peuvent être perdus si les données du navigateur sont effacées. Ne stocke pas d'informations confidentielles dans cette version.</p>
+    <button class="btn btn-danger" onclick="clearAll()">Effacer tous les articles de cet appareil</button>
+  </div>
+</section>
+
+<p class="footer-note">HIISPORTS NEWSROOM · Le sport, l'information et la vérification.</p>
+</div>
 </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = "hiisports_newsroom_articles_v1";
+let articles = [];
+try { articles = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
+catch(e) { articles = []; }
+
+const titles = {
+ dashboard:"Tableau de bord",articles:"Actualités",editor:"Rédaction",
+ verification:"Vérification",sports:"Sports & compétitions",
+ social:"Publications sociales",sources:"Sources & références",settings:"Paramètres"
+};
+
+function saveData(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+  refresh();
+}
+function notify(message){
+  const t=document.getElementById("toast");
+  t.textContent=message;t.style.display="block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer=setTimeout(()=>t.style.display="none",2600);
+}
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+  document.getElementById("topTitle").textContent=titles[id]||"HIISPORTS";
+  document.getElementById("sidebar").classList.remove("open");
+  if(id==="editor" && !document.getElementById("articleId").value) {
+    document.getElementById("editorHeading").textContent="Rédaction d'un article";
+  }
+  refresh();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+document.getElementById("mobileMenu").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+
+function newArticle(){
+  resetForm();
+  showPage("editor");
+}
+function resetForm(){
+  document.getElementById("articleForm").reset();
+  document.getElementById("articleId").value="";
+  document.getElementById("editorHeading").textContent="Rédaction d'un article";
+}
+function dateText(date){
+  try{return new Date(date).toLocaleDateString("fr-FR");}
+  catch(e){return date;}
+}
+function statusClass(status){
+  return status==="Validé"?"valid":status==="À vérifier"?"review":"draft";
+}
+document.getElementById("articleForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const id=document.getElementById("articleId").value;
+  const old=articles.find(a=>a.id===id);
+  const article={
+    id:id||String(Date.now()),
+    title:document.getElementById("title").value.trim(),
+    sport:document.getElementById("sport").value,
+    status:document.getElementById("status").value,
+    summary:document.getElementById("summary").value.trim(),
+    body:document.getElementById("body").value.trim(),
+    source:document.getElementById("source").value.trim(),
+    created:old?old.created:new Date().toISOString(),
+    updated:new Date().toISOString()
+  };
+  if(!article.title||!article.sport||!article.body){notify("Complète les champs obligatoires.");return;}
+  if(old) articles=articles.map(a=>a.id===id?article:a);
+  else articles.unshift(article);
+  saveData();resetForm();showPage("articles");
+  notify(old?"Article modifié.":"Article enregistré.");
+});
+function editArticle(id){
+  const a=articles.find(x=>x.id===id);if(!a)return;
+  document.getElementById("articleId").value=a.id;
+  document.getElementById("title").value=a.title;
+  document.getElementById("sport").value=a.sport;
+  document.getElementById("status").value=a.status;
+  document.getElementById("summary").value=a.summary;
+  document.getElementById("body").value=a.body;
+  document.getElementById("source").value=a.source;
+  document.getElementById("editorHeading").textContent="Modifier l'article";
+  showPage("editor");
+}
+function deleteArticle(id){
+  if(!confirm("Supprimer définitivement cet article de cet appareil ?"))return;
+  articles=articles.filter(a=>a.id!==id);saveData();notify("Article supprimé.");
+}
+function refresh(){
+  const count=s=>articles.filter(a=>a.status===s).length;
+  document.getElementById("totalCount").textContent=articles.length;
+  document.getElementById("draftCount").textContent=count("Brouillon");
+  document.getElementById("reviewCount").textContent=count("À vérifier");
+  document.getElementById("validCount").textContent=count("Validé");
+
+  const recent=document.getElementById("recentArticles");
+  if(!articles.length) recent.innerHTML='<div class="empty"><div class="empty-icon">📰</div>Aucun article pour le moment.<br>Commence par rédiger ta première actualité.</div>';
+  else recent.innerHTML=articles.slice(0,5).map(a=>`
+    <div class="source-item">
+      <strong>${escapeHTML(a.title)}</strong>
+      <p>${escapeHTML(a.sport)} · ${escapeHTML(a.status)} · ${dateText(a.updated)}</p>
+    </div>`).join("");
+
+  renderArticles();
+  renderVerification();
+  renderSports();
+  renderSocialSelect();
+}
+function renderArticles(){
+  const search=(document.getElementById("articleSearch").value||"").toLowerCase();
+  const status=document.getElementById("statusFilter").value;
+  const list=articles.filter(a=>(a.title+" "+a.sport).toLowerCase().includes(search)&&(!status||a.status===status));
+  document.getElementById("articleRows").innerHTML=list.map(a=>`
+    <tr>
+      <td><div class="article-title">${escapeHTML(a.title)}</div><div class="article-sub">${escapeHTML(a.summary||"Sans résumé")}</div></td>
+      <td>${escapeHTML(a.sport)}</td>
+      <td><span class="badge ${statusClass(a.status)}">${escapeHTML(a.status)}</span></td>
+      <td>${dateText(a.updated)}</td>
+      <td><button class="btn" onclick="editArticle('${a.id}')">Modifier</button> <button class="btn btn-danger" onclick="deleteArticle('${a.id}')">×</button></td>
+    </tr>`).join("");
+  document.getElementById("articleEmpty").style.display=list.length?"none":"block";
+}
+document.getElementById("articleSearch").addEventListener("input",renderArticles);
+document.getElementById("statusFilter").addEventListener("change",renderArticles);
+
+function renderVerification(){
+  const list=articles.filter(a=>a.status==="À vérifier");
+  const el=document.getElementById("verificationList");
+  if(!list.length){el.className="empty";el.textContent="Aucun article en attente de vérification.";return;}
+  el.className="";
+  el.innerHTML=list.map(a=>`
+    <div class="source-item">
+      <strong>${escapeHTML(a.title)}</strong>
+      <p>${escapeHTML(a.sport)} · Source : ${escapeHTML(a.source||"À renseigner")}</p>
+      <div class="form-actions">
+        <button class="btn" onclick="editArticle('${a.id}')">Examiner</button>
+        <button class="btn btn-primary" onclick="validateArticle('${a.id}')">Marquer comme validé</button>
+      </div>
+    </div>`).join("");
+}
+function validateArticle(id){
+  const a=articles.find(x=>x.id===id);if(!a)return;
+  if(!confirm("As-tu vérifié les faits et les sources de cet article ?"))return;
+  a.status="Validé";a.updated=new Date().toISOString();saveData();notify("Statut mis à jour.");
+}
+function renderSports(){
+  const sports=["Football","Basketball","Tennis","Volleyball","Baseball","Sports de combat","Athlétisme","Formule 1","Autres sports"];
+  document.getElementById("sportStats").innerHTML=sports.map(s=>{
+    const n=articles.filter(a=>a.sport===s).length;
+    return `<div class="stat-card"><div class="stat-top">${escapeHTML(s)}</div><div class="stat-number">${n}</div></div>`;
+  }).join("");
+}
+function renderSocialSelect(){
+  const el=document.getElementById("socialArticle");
+  const previous=el.value;
+  el.innerHTML='<option value="">Sélectionner un article</option>'+articles.map(a=>`<option value="${a.id}">${escapeHTML(a.title)}</option>`).join("");
+  if(articles.some(a=>a.id===previous))el.value=previous;
+}
+function generateSocial(){
+  const a=articles.find(x=>x.id===document.getElementById("socialArticle").value);
+  const platform=document.getElementById("socialPlatform").value;
+  if(!a){notify("Sélectionne un article.");return;}
+  const text=`🏆 HIISPORTS | ${a.sport.toUpperCase()}\n\n${a.title}\n\n${a.summary||a.body.slice(0,220)}\n\nRetrouve l'actualité sportive avec HIISPORTS.\n\n#HIISPORTS #Sport #${a.sport.replaceAll(" ","")}`;
+  document.getElementById("socialPreview").textContent=`[Version préparée pour ${platform}]\n\n${text}`;
+}
+function copySocial(){
+  const text=document.getElementById("socialPreview").textContent;
+  if(!text||text.startsWith("Sélectionne")){notify("Génère d'abord une publication.");return;}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>notify("Texte copié.")).catch(()=>notify("Copie non disponible sur ce navigateur."));
+  }else notify("La copie n'est pas disponible sur ce navigateur.");
+}
+function clearAll(){
+  if(!confirm("Attention : supprimer tous les articles enregistrés sur cet appareil ?"))return;
+  articles=[];saveData();notify("Articles effacés.");
+}
+function escapeHTML(value){
+  return String(value||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;',"'":"&#39;"}[c]));
+}
+refresh();
+</script>
 </body>
 </html>
 
